@@ -2,7 +2,6 @@
 pragma solidity ^0.8.19;
 
 contract SimpleStorage {
-
     /* ERRORS */
     error NameEmpty();
     error NumberInvalid();
@@ -33,7 +32,11 @@ contract SimpleStorage {
     }
 
     /* CREATE */
-    function addPerson(uint256 _age, string calldata _name, uint256 _favoriteNumber) external {
+    function addPerson(
+        uint256 _age,
+        string calldata _name,
+        uint256 _favoriteNumber
+    ) external {
         if (_age == 0) revert AgeInvalid();
         if (bytes(_name).length == 0) revert NameEmpty();
         if (_favoriteNumber == 0) revert NumberInvalid();
@@ -45,7 +48,9 @@ contract SimpleStorage {
     }
 
     /* READ */
-    function getPersonByName(string calldata _name) external view returns (Person memory) {
+    function getPersonByName(
+        string calldata _name
+    ) external view returns (Person memory) {
         if (!personExists[_name]) revert PersonNotFound();
 
         uint256 index = nameToIndex[_name] - 1;
@@ -65,7 +70,11 @@ contract SimpleStorage {
     }
 
     /* UPDATE */
-    function updatePerson( string calldata _name, uint256 _newAge, uint256 _newFavoriteNumber) external {
+    function updatePerson(
+        string calldata _name,
+        uint256 _newAge,
+        uint256 _newFavoriteNumber
+    ) external {
         if (!personExists[_name]) revert PersonNotFound();
         if (_newAge == 0) revert AgeInvalid();
         if (_newFavoriteNumber == 0) revert NumberInvalid();
@@ -76,7 +85,7 @@ contract SimpleStorage {
         listOfPeople[index].favoriteNumber = _newFavoriteNumber;
     }
 
-    /* DELETE, tetap ada tapi kosong (gunakan swap & pop lebih baik */
+    /* DELETE, tetap ada tapi kosong (gunakan swap & pop lebih baik) */
     function deletePerson(string calldata _name) external {
         if (!personExists[_name]) revert PersonNotFound();
 
